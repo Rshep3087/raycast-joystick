@@ -8,12 +8,6 @@
   "license": "MIT",
   "commands": [
     {
-      "name": "get-current-song",
-      "title": "Get Current Song",
-      "description": "Get the currently playing song for the user",
-      "mode": "view"
-    },
-    {
       "name": "get-now-playing",
       "title": "Get Now Playing",
       "description": "Get all currently playing songs from your Subsonic server",

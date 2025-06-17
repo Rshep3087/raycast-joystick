@@ -119,16 +119,12 @@ export default function BrowseLibraryCommand() {
       setError(undefined);
 
       const subsonic = createSubsonicInstance();
-      const response = await subsonic.browsing.getAlbumList2({ type: "byArtist", size: 500 });
+      const response = await subsonic.browsing.getArtist({ id: artistId });
 
       let albumList: Album[] = [];
 
-      if (response.albumList2?.album) {
-        const allAlbums = Array.isArray(response.albumList2.album)
-          ? response.albumList2.album
-          : [response.albumList2.album];
-        // Filter albums by artist ID
-        albumList = allAlbums.filter((album: Album) => album.artistId === artistId);
+      if (response.artist?.album) {
+        albumList = Array.isArray(response.artist.album) ? response.artist.album : [response.artist.album];
       }
 
       setAlbums(

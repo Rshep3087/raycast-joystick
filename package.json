@@ -12,6 +12,12 @@
       "title": "Get Now Playing",
       "description": "Get all currently playing songs from your Subsonic server",
       "mode": "view"
+    },
+    {
+      "name": "browse-library",
+      "title": "Browse Library",
+      "description": "Browse your music library by artists, albums, and songs",
+      "mode": "view"
     }
   ],
   "preferences": [

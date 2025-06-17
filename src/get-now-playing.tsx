@@ -68,7 +68,10 @@ export default function GetNowPlayingCommand() {
         // Get now playing information
         const response: { nowPlaying: NowPlayingResponse } = await subsonic.browsing.getNowPlaying();
 
-        setNowPlaying(response.nowPlaying.entry || []);
+        // Filter to only show the logged-in user's now playing song
+        const allEntries = response.nowPlaying.entry || [];
+        const userEntries = allEntries.filter((entry) => entry.username === preferences.username);
+        setNowPlaying(userEntries);
       } catch (err) {
         console.error("Error fetching now playing:", err);
         setError(err instanceof Error ? err : new Error("Unknown error occurred"));
@@ -113,13 +116,13 @@ export default function GetNowPlayingCommand() {
     }
 
     if (!nowPlaying || nowPlaying.length === 0) {
-      return "# No Music Playing\n\n🎵 Nobody is currently listening to music on your Subsonic server.";
+      return "# No Music Playing\n\n🎵 You are not currently listening to music on your Subsonic server.";
     }
 
     let markdown = "# Now Playing\n\n";
 
     nowPlaying.forEach((entry, index) => {
-      markdown += `## ${entry.username}\n\n`;
+      // Since we're only showing the current user, we don't need to display the username as a header
       markdown += `**${entry.title}**\n\n`;
 
       if (entry.artist) {
@@ -163,7 +166,7 @@ export default function GetNowPlayingCommand() {
       metadata={
         nowPlaying && nowPlaying.length > 0 ? (
           <Detail.Metadata>
-            <Detail.Metadata.Label title="Active Users" text={nowPlaying.length.toString()} />
+            <Detail.Metadata.Label title="User" text={preferences.username} />
             <Detail.Metadata.Separator />
             <Detail.Metadata.Label title="Server" text={preferences.serverUrl} />
           </Detail.Metadata>

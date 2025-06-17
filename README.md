@@ -4,7 +4,7 @@ A Raycast extension for interacting with your Subsonic music server.
 
 ## Features
 
-- **Get Now Playing**: View all currently playing songs across all users on your Subsonic server
+- **Get Now Playing**: View your currently playing song on your Subsonic server
 
 ## Setup
 
@@ -19,9 +19,8 @@ A Raycast extension for interacting with your Subsonic music server.
 
 ### Get Now Playing
 
-Displays information about all songs currently being played by users on your Subsonic server, including:
+Displays information about your currently playing song on your Subsonic server, including:
 
-- Username of the listener
 - Song title, artist, and album
 - Playback duration and quality
 - Time since playback started

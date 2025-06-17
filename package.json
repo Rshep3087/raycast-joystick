@@ -12,13 +12,6 @@
       "title": "Get Now Playing",
       "description": "Get all currently playing songs from your Subsonic server",
       "mode": "view"
-    },
-    {
-      "name": "pause",
-      "title": "Pause",
-      "subtitle": "Pause current track",
-      "description": "Pauses the currently playing song.",
-      "mode": "no-view"
     }
   ],
   "preferences": [

@@ -5,6 +5,7 @@ A Raycast extension for interacting with your Subsonic music server.
 ## Features
 
 - **Get Now Playing**: View your currently playing song on your Subsonic server
+- **Browse Library**: Browse your music collection by artists, albums, and songs
 
 ## Setup
 
@@ -25,6 +26,18 @@ Displays information about your currently playing song on your Subsonic server, 
 - Playback duration and quality
 - Time since playback started
 - Player information
+
+### Browse Library
+
+Navigate through your music collection with a hierarchical interface:
+
+- **Artists**: Browse all artists in your library with album counts
+- **Albums**: View albums by selected artist with year and song count
+- **Songs**: Browse tracks within an album with detailed metadata
+- **Stream URLs**: Copy or open streaming URLs for any track
+- **Rich Metadata**: View duration, bitrate, file format, and file size
+- **Search**: Find artists, albums, or songs quickly
+- **Keyboard Navigation**: Use shortcuts to copy URLs, titles, or navigate back
 
 ## Requirements
 

@@ -8,15 +8,56 @@
   "license": "MIT",
   "commands": [
     {
-      "name": "get-now-playing",
-      "title": "Get Now Playing",
+      "name": "get-current-song",
+      "title": "Get Current Song",
       "description": "Get the currently playing song for the user",
       "mode": "view"
+    },
+    {
+      "name": "get-now-playing",
+      "title": "Get Now Playing",
+      "description": "Get all currently playing songs from your Subsonic server",
+      "mode": "view"
+    }
+  ],
+  "preferences": [
+    {
+      "name": "serverUrl",
+      "title": "Server URL",
+      "description": "Your Subsonic server URL (e.g., http://localhost:4533)",
+      "type": "textfield",
+      "required": true,
+      "placeholder": "http://localhost:4533"
+    },
+    {
+      "name": "username",
+      "title": "Username",
+      "description": "Your Subsonic username",
+      "type": "textfield",
+      "required": true
+    },
+    {
+      "name": "password",
+      "title": "Password",
+      "description": "Your Subsonic password",
+      "type": "password",
+      "required": true
+    },
+    {
+      "name": "salt",
+      "title": "Salt (Optional)",
+      "description": "Custom salt for password hashing (auto-generated if not provided)",
+      "type": "textfield",
+      "required": false,
+      "placeholder": "random-salt-string"
     }
   ],
   "dependencies": {
     "@raycast/api": "^1.100.2",
-    "@raycast/utils": "^1.17.0"
+    "@raycast/utils": "^1.17.0",
+    "@types/md5": "^2.3.5",
+    "md5": "^2.3.0",
+    "subsonicjs": "^0.6.0"
   },
   "devDependencies": {
     "@raycast/eslint-config": "^2.0.4",

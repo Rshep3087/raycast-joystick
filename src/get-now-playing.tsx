@@ -1,5 +1,5 @@
 import { Detail, getPreferenceValues, showToast, Toast } from "@raycast/api";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import md5 from "md5";
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const Subsonic = require("subsonicjs");
@@ -49,6 +49,12 @@ export default function GetNowPlayingCommand() {
   const [error, setError] = useState<Error>();
 
   const preferences = getPreferenceValues<Preferences>();
+  const { serverUrl, username, password, salt } = preferences;
+
+  // Generate a stable salt for this session if none provided
+  const effectiveSalt = useMemo(() => {
+    return salt || Math.random().toString(36).substring(7);
+  }, [salt]);
 
   useEffect(() => {
     async function fetchNowPlaying() {
@@ -56,21 +62,18 @@ export default function GetNowPlayingCommand() {
         setIsLoading(true);
         setError(undefined);
 
-        // Generate salt if not provided
-        const salt = preferences.salt || Math.random().toString(36).substring(7);
-
         // Create password token using MD5
-        const token = md5(preferences.password + salt);
+        const token = md5(password + effectiveSalt);
 
         // Initialize Subsonic API
-        const subsonic = Subsonic(preferences.username, token, salt, preferences.serverUrl);
+        const subsonic = Subsonic(username, token, effectiveSalt, serverUrl);
 
         // Get now playing information
         const response: { nowPlaying: NowPlayingResponse } = await subsonic.browsing.getNowPlaying();
 
         // Filter to only show the logged-in user's now playing song
         const allEntries = response.nowPlaying.entry || [];
-        const userEntries = allEntries.filter((entry) => entry.username === preferences.username);
+        const userEntries = allEntries.filter((entry) => entry.username === username);
         setNowPlaying(userEntries);
       } catch (err) {
         console.error("Error fetching now playing:", err);
@@ -81,7 +84,7 @@ export default function GetNowPlayingCommand() {
     }
 
     fetchNowPlaying();
-  }, [preferences]);
+  }, [serverUrl, username, password, effectiveSalt]);
 
   useEffect(() => {
     if (error) {
@@ -166,9 +169,9 @@ export default function GetNowPlayingCommand() {
       metadata={
         nowPlaying && nowPlaying.length > 0 ? (
           <Detail.Metadata>
-            <Detail.Metadata.Label title="User" text={preferences.username} />
+            <Detail.Metadata.Label title="User" text={username} />
             <Detail.Metadata.Separator />
-            <Detail.Metadata.Label title="Server" text={preferences.serverUrl} />
+            <Detail.Metadata.Label title="Server" text={serverUrl} />
           </Detail.Metadata>
         ) : undefined
       }
